@@ -13,8 +13,11 @@
           <el-input v-model="form.userPwd" type="password" prefix-icon="el-icon-lock" :placeholder="$t('login.pwdPlaceholder')" />
         </el-form-item>
         <el-form-item class="btn-center">
-          <el-button type="primary" :loading="loading" size="small" @click="submitForm('form')">{{ $t('login.loginBtn') }}</el-button>
-          <el-button size="small" @click="register">{{ $t('login.regBtn') }}</el-button>
+          <el-button type="primary" class="login-btn" :loading="loading" size="small" @click="submitForm('form')">{{ $t('login.loginBtn') }}</el-button>
+          <div class="info-btn">
+            <el-button size="small" class="reg-btn" type="text" @click="register">{{ $t('login.forgotBtn') }}</el-button>
+            <el-button size="small" class="reg-btn" type="text" @click="register">{{ $t('login.regBtn') }}</el-button>
+          </div>
         </el-form-item>
       </el-form>
     </div>
@@ -22,7 +25,7 @@
 </template>
 
 <script>
-import { login } from '@/api/login'
+import { login } from '@/api/users'
 import langSelect from '@/components/langSelect/index.vue'
 export default {
   name: 'Login',
@@ -63,7 +66,7 @@ export default {
       })
     },
     register() {
-
+      this.$router.push('/register')
     }
   }
 }

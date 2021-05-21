@@ -3,11 +3,30 @@ export default {
     language: '语言'
   },
   login: {
-    title: '管理系统',
-    loginBtn: '登录',
+    title: '管理系统登录',
+    loginBtn: '立即登录',
     regBtn: '注册',
     userPlaceholder: '请输入用户名',
-    pwdPlaceholder: '请输入密码'
+    pwdPlaceholder: '请输入密码',
+    forgotBtn: '忘记密码'
+  },
+  register: {
+    title: '管理系统注册',
+    loginBtn: '立即登录',
+    regBtn: '立即注册',
+    userPlaceholder: '请输入用户名',
+    pwdPlaceholder: '请输入密码',
+    notarizePwdPlaceholder: '请输入确认密码',
+    telPlaceholder: '请输入手机号',
+    telError: '请输入正确手机号码',
+    emailError: '请输入正确邮箱地址',
+    emailPlaceholder: '请输入邮箱',
+    passwordError: '请输入6-20位数字与字母组合的密码',
+    notarizePwdError: '确认密码与输入密码不一致!',
+    sexPlaceholder: '请选择性别',
+    userNameError: '用户名字符长度不能超过30位',
+    isIllegalCharCheck: '不能输入特殊字符',
+    code: '请输入验证码'
   },
   common: {
     switchLanguage: '语言切换成功'

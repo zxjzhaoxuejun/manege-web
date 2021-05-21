@@ -20,4 +20,26 @@
     .btn-center{
         text-align: center;
     }
+
+    .login-btn{
+        width: 100%;
+    }
+
+    .info-btn{
+        display: flex;
+        justify-content: center;
+    }
+
+    .reg-btn{
+        text-align: right;
+    }
+
+    .input-two{
+        display: flex;
+        justify-content: space-between;
+
+        .code-img{
+            cursor: pointer;
+        }
+    }
 }

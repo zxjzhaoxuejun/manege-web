@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import Welcome from '@/components/Welcome.vue'
+import Settings from './modules/settings'
 
 const routes = [
   {
@@ -30,15 +30,15 @@ const routes = [
     children: [
       {
         name: 'Welcome',
-        path: '/welcome',
+        path: 'welcome',
         meta: {
           title: '欢迎页'
         },
-        component: Welcome
+        component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
       }
     ]
-
-  }
+  },
+  ...Settings
 ]
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 <template>
   <div class="layout-base">
-    <div class="nav-side">
+    <div class="nav-side" :class="{'hide-nav-side':isCollapse}">
       <el-menu
         :unique-opened="true"
         class="el-menu-vertical-demo"
@@ -8,19 +8,28 @@
         text-color="#fff"
         :collapse="isCollapse"
         :router="true"
-        @open="handleOpen"
-        @close="handleClose"
       >
         <LeftNav :left-menu-list="leftMenuList" />
       </el-menu>
     </div>
-    <div class="layout-content">
+    <div class="layout-content" :class="{'hide-layout-content':isCollapse}">
       <div class="nav-top">
         <div class="nav-item">
           <i class="el-icon-s-fold isCollapse" @click="openLeftCollapse" />
           <BreadCrumb />
         </div>
-        <div class="suer-info">{{ userInfo.userName }}</div>
+        <el-dropdown class="suer-info" @command="handleCommand">
+          <span class="el-dropdown-link">
+            {{ userInfo.userName }} <i class="el-icon-arrow-down el-icon--right" />
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="userinfo">个人信息</el-dropdown-item>
+              <el-dropdown-item command="password">修改密码</el-dropdown-item>
+              <el-dropdown-item command="login-out">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
       <div class="wrapper">
         <div class="main-page">
@@ -104,11 +113,22 @@ export default {
     this.leftMenuList = menuJson.data
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath)
+    handleCommand(path) {
+      switch (path) {
+        case 'login-out':
+          return this.loginOut()
+        case 'userinfo':
+          break
+        case 'password':
+          this.$router.push('password')
+          break
+        default:
+          break
+      }
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath)
+    loginOut() {
+      this.$stroage.clearItem('userInfo')
+      this.$router.push('/login')
     },
     openLeftCollapse() {
       this.isCollapse = !this.isCollapse
@@ -126,19 +146,28 @@ export default {
         width: 260px;
         height: 100vh;
         overflow-y: auto;
-        color: #fff;
+        color: $white;
+        transition: all .5s;
+    }
+
+    .hide-nav-side{
+      width: 64px;
+      transition: all .5s;
     }
 
     .layout-content{
         margin-left: 260px;
+        transition: all .5s;
 
         .nav-top{
             display: flex;
             justify-content: space-between;
+            align-items: center;
             height: 50px;
             line-height: 50px;
             padding: 0 15px;
-            border-bottom: 1px #eee solid;
+            border-bottom: 1px $border-eee solid;
+            background:$whiteBg;
 
             .nav-item{
               display: flex;
@@ -149,19 +178,32 @@ export default {
               margin-right: 8px;
               cursor: pointer;
             }
+
+            .suer-info{
+
+              .el-dropdown-link{
+                cursor: pointer;
+                color: $blueText;
+              }
+            }
         }
 
         .wrapper{
-            background: #f2f4f8;
+            background: $bodyBg;
             padding:15px;
             height:calc(100vh - 82px);
 
             .main-page{
                 height:calc(100% - 30px);
-                background:#fff;
+                background:$whiteBg;
                 padding: 15px;
             }
         }
+    }
+
+    .hide-layout-content{
+      margin-left: 64px;
+      transition: all .5s;
     }
 
     ::v-deep(.el-menu-vertical-demo){

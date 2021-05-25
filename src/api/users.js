@@ -16,6 +16,14 @@ export function register(data) {
   })
 }
 
+export function password(data) {
+  return request({
+    url:`/users/password`,
+    method:'post',
+    data
+  })
+}
+
 export function getCode() {
   return request({
     url:`/users/code-captcha`,

@@ -2,6 +2,9 @@ export default {
   navbar: {
     language: 'language'
   },
+  router: {
+    home: 'Home'
+  },
   login: {
     title: '管理系统',
     loginBtn: 'Login',

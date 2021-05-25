@@ -2,6 +2,9 @@ export default {
   navbar: {
     language: '语言'
   },
+  router: {
+    home: '首页'
+  },
   login: {
     title: '管理系统登录',
     loginBtn: '立即登录',
@@ -9,6 +12,13 @@ export default {
     userPlaceholder: '请输入用户名',
     pwdPlaceholder: '请输入密码',
     forgotBtn: '忘记密码'
+  },
+  password: {
+    title: '修改密码',
+    psdBtn: '确认修改',
+    oldpassword: '请输入原密码',
+    pwdPlaceholder: '请输入新密码',
+    notarizePwdPlaceholder: '请输入确认新密码'
   },
   register: {
     title: '管理系统注册',
@@ -29,6 +39,7 @@ export default {
     code: '请输入验证码'
   },
   common: {
-    switchLanguage: '语言切换成功'
+    switchLanguage: '语言切换成功',
+    cancel: '取消'
   }
 }

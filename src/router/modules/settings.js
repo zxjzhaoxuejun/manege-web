@@ -25,6 +25,14 @@ export default [
           title: '菜单管理'
         },
         component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
+      },
+      {
+        name: 'Password',
+        path: 'password',
+        meta: {
+          title: '修改密码'
+        },
+        component: () => import(/* webpackChunkName: "password" */'@/views/login/password.vue')
       }
     ]
 

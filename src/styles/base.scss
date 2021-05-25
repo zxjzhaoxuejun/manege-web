@@ -8,6 +8,11 @@ body{
     height: 100vh;
 }
 
+a{
+    color: $baseFont !important;
+    font-weight: normal !important;
+}
+
 .app-container{
     display: flex;
     height: 100vh;

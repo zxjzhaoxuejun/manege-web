@@ -164,7 +164,7 @@ export default {
         }
     }
 
-    ::v-deep .el-menu-vertical-demo{
+    ::v-deep(.el-menu-vertical-demo){
       height: 100%;
       border-right: none;
       background-color:#001529!important;

@@ -7,9 +7,15 @@
         background-color="#545c64"
         text-color="#fff"
         :collapse="isCollapse"
+        :default-active="activeMenu"
         :router="true"
       >
-        <LeftNav :left-menu-list="leftMenuList" />
+        <LeftNav
+          v-for="route in permission_routes"
+          :key="route.path"
+          :menu="route"
+          :base-path="route.path"
+        />
       </el-menu>
     </div>
     <div class="layout-content" :class="{'hide-layout-content':isCollapse}">
@@ -101,16 +107,24 @@ export default {
   components: { LeftNav, BreadCrumb },
   data() {
     return {
-      leftMenuList: [],
       isCollapse: false
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'permission_routes']),
+    activeMenu() {
+      const route = this.$route
+      const { meta, path } = route
+      // if set path, the sidebar will highlight the path you set
+      console.log(path)
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
+    }
   },
   created() {
-    console.log(menuJson.data)
-    this.leftMenuList = menuJson.data
+
   },
   methods: {
     handleCommand(path) {

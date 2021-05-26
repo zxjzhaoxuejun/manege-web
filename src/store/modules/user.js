@@ -2,7 +2,8 @@ import storage from '@/utils/storage.js'
 
 const state = {
   userInfo: '' || storage.getItem('userInfo'),
-  token: ''
+  token: '',
+  roles: []
 }
 
 const mutations = {
@@ -10,12 +11,14 @@ const mutations = {
     console.log(userInfo)
     state.userInfo = userInfo
     storage.setItem('userInfo', userInfo)
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
 const actions = {
   saveUserInfo({ commit }, userInfo) {
-    console.log(userInfo)
     commit('SAVE_USER_INFO', userInfo)
   }
 }

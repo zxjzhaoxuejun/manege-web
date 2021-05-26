@@ -3,18 +3,29 @@ import Layout from '@/layout/index.vue'
 export default [
   {
     name: 'Settings',
-    path: '/',
+    path: '/settings',
     meta: {
-      title: '系统管理'
+      title: '系统管理',
+      icon: 'el-icon-setting'
     },
     component: Layout,
-    redirect: '/settings',
+    redirect: '/settings/user-control',
     children: [
+      {
+        name: 'AuthControl',
+        path: 'auth-control',
+        meta: {
+          title: '权限管理',
+          icon: 'el-icon-key'
+        },
+        component: () => import(/* webpackChunkName: "auth" */'@/views/authority/auth.vue')
+      },
       {
         name: 'UserControl',
         path: 'user-control',
         meta: {
-          title: '用户管理'
+          title: '用户管理',
+          icon: 'el-icon-user'
         },
         component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
       },
@@ -22,7 +33,8 @@ export default [
         name: 'MenuControl',
         path: 'menu-control',
         meta: {
-          title: '菜单管理'
+          title: '菜单管理',
+          icon: 'el-icon-s-order'
         },
         component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
       },

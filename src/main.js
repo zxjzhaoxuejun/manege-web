@@ -7,7 +7,7 @@ import SetupI18n from '@/lang'
 import store from '@/store'
 // import '@/icons' // icon
 import svgIcon from '@/components/SvgIcon/index.vue'
-
+import './permission'
 import 'element-plus/lib/theme-chalk/index.css'
 
 // console.log('环境变量=》', import.meta.env)

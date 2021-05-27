@@ -27,10 +27,10 @@ service.interceptors.request.use((req) => {
 
 // 响应拦截
 service.interceptors.response.use((res) => {
-  const { code, data, msg } = res.data
+  const { code, msg } = res.data
   if (code === 200) {
     // 成功
-    return data
+    return res.data
   } else if (code === 50001) {
     // 未登录
     ElMessage.error(TOKEN_INVALID)

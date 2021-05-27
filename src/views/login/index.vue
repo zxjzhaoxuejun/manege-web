@@ -55,7 +55,7 @@ export default {
           this.loading = true
           login(this.form).then(res => {
             this.loading = false
-            this.$store.dispatch('user/saveUserInfo', res)
+            this.$store.dispatch('user/saveUserInfo', res.data)
             this.$router.replace('/')
           }).catch(() => {
             this.loading = false

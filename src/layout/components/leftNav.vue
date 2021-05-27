@@ -2,7 +2,7 @@
   <el-submenu v-if="menu.children&&menu.children.length>0" :index="menuPath(menu.path)">
     <template #title>
       <i :class="menu.meta.icon" />
-      <span>{{ menu.meta.title }}</span>
+      <span>{{ generateTitle(menu.meta.title) }}</span>
     </template>
     <left-nav
       v-for="child in menu.children"
@@ -14,12 +14,13 @@
   </el-submenu>
   <el-menu-item v-else :index="onlyMenuPath(menu.path)">
     <i :class="menu.meta.icon" />
-    <span>{{ menu.meta.title }}</span>
+    <span>{{ generateTitle(menu.meta.title) }}</span>
   </el-menu-item>
 </template>
 
 <script>
 // "menuType":"1", //1菜单，2按钮
+import { generateTitle } from '@/utils/routeI18n'
 export default {
   name: 'TreeMenu',
   props: {
@@ -47,6 +48,7 @@ export default {
       const resPath = basePaths + '/' + routePath
       return resPath
     },
+    generateTitle,
     onlyMenuPath(routePath) {
       return this.isNest ? this.basePath : routePath
     }

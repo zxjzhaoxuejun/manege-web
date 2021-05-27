@@ -38,8 +38,21 @@ export default {
     isIllegalCharCheck: '不能输入特殊字符',
     code: '请输入验证码'
   },
+  authority: {
+    dailogAddTitle: '新增权限管理',
+    dailogEditTitle: '编辑权限管理',
+    prentId: '父节点',
+    authCode: '权限编码',
+    authName: '权限名称',
+    authCodeError: '请输入权限编码',
+    authNameError: '请输入权限名称',
+    authType: '权限类型',
+    menu: '菜单',
+    btn: '按钮'
+  },
   common: {
     switchLanguage: '语言切换成功',
-    cancel: '取消'
+    cancel: '取消',
+    save: '保存'
   }
 }

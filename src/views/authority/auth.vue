@@ -144,6 +144,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.auth-mode{
+  background: $whiteBg;
+  padding: 15px;
+}
     .auth-list-mode{
         display: flex;
         margin-top:15px;

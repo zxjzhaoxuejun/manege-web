@@ -49,10 +49,15 @@ service.interceptors.response.use((res) => {
  */
 
 function request(options) {
+  console.log(options)
+  let isMock = config.mock
+  if (typeof options.mock !== 'undefined') {
+    isMock = options.mock
+  }
   if (config.env === 'prod') {
     service.defaults.baseURL = config.baseApi
   } else {
-    service.defaults.baseURL = config.mock ? config.mockApi : config.baseApi
+    service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
   }
 
   return service(options)

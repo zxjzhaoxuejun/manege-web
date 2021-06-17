@@ -27,7 +27,7 @@ export default [
           title: '用户管理',
           icon: 'el-icon-user'
         },
-        component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
+        component: () => import(/* webpackChunkName: "welcome" */'@/views/authority/user.vue')
       },
       {
         name: 'MenuControl',

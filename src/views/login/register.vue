@@ -124,7 +124,7 @@ export default {
     },
     getCodeImg() {
       getCode().then(res => {
-        this.codeImg = res
+        this.codeImg = res.data
       })
     },
     refreshCode() {

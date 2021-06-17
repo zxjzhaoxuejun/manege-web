@@ -38,70 +38,18 @@
         </el-dropdown>
       </div>
       <div class="wrapper">
-        <div class="main-page">
-          <router-view />
-        </div>
+        <!-- <div class="main-page"> -->
+        <router-view />
+        <!-- </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import LeftNav from './components/LeftNav.vue'
+import LeftNav from './components/leftNav.vue'
 import BreadCrumb from './components/BreadCrumb.vue'
 import { mapGetters } from 'vuex'
-const menuJson = {
-  'code': 200,
-  'data': [
-    {
-      'parentId': [],
-      'updateTime': '',
-      'createTime': '',
-      'id': '1',
-      'menuType': '1',
-      'menuName': '首页',
-      'menuCode': '',
-      'path': '/welcome',
-      'icon': 'el-icon-s-home',
-      'children': []
-    },
-    {
-      'parentId': [],
-      'updateTime': '',
-      'createTime': '',
-      'id': '2',
-      'menuType': '1',
-      'menuName': '系统管理',
-      'menuCode': '',
-      'path': '/settings',
-      'icon': 'el-icon-setting',
-      'children': [
-        {
-          'parentId': ['1'],
-          'updateTime': '',
-          'createTime': '',
-          'id': '2_1',
-          'menuType': '1',
-          'menuName': '用户管理',
-          'menuCode': '',
-          'path': '/user-control',
-          'icon': 'el-icon-user'
-        },
-        {
-          'parentId': ['1'],
-          'updateTime': '',
-          'createTime': '',
-          'id': '2_2',
-          'menuType': '1',
-          'menuName': '菜单管理',
-          'menuCode': '',
-          'path': '/menu-control',
-          'icon': 'el-icon-s-order'
-        }
-      ]
-    }
-  ]
-}
 
 export default {
   components: { LeftNav, BreadCrumb },

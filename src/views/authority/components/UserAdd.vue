@@ -6,10 +6,10 @@
   >
     <el-form ref="formList" :model="forms" :rules="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="用户名称" prop="userName">
-        <el-input v-model="forms.userName" placeholder="请输入用户名" />
+        <el-input v-model="forms.userName" :disabled="forms.userId" placeholder="请输入用户名" />
       </el-form-item>
       <el-form-item label="用户邮箱" prop="userEmail">
-        <el-input v-model="forms.userEmail" placeholder="请输入用户邮箱" />
+        <el-input v-model="forms.userEmail" :disabled="forms.userId" placeholder="请输入用户邮箱" />
       </el-form-item>
       <el-form-item label="手机号码" prop="mobile">
         <el-input v-model="forms.mobile" placeholder="请输入用户手机号" />
@@ -88,7 +88,9 @@ export default {
       state: null,
       roleList: null,
       deptId: '',
-      role: 1
+      role: 1,
+      action: '',
+      userId: null
     })
     const dialogTitle = ref('')
     const ruleForm = reactive({
@@ -109,6 +111,8 @@ export default {
         state = '',
         roleList = '',
         deptId = '',
+        action = 'add',
+        userId = null,
         role = 1 } = props.info
       forms.userEmail = userEmail
       forms.userName = userName
@@ -118,6 +122,8 @@ export default {
       forms.roleList = roleList
       forms.deptId = deptId
       forms.state = state
+      forms.action = action
+      forms.userId = userId
     }, { deep: true, immediate: true })
 
     const formList = ref(null)
@@ -138,7 +144,7 @@ export default {
     // 获取所有角色
     const getRoleListData = () => {
       getRoleList().then(res => {
-        roleListMap.value = res.data
+        roleListMap.value = res.data.list
       })
     }
     // 获取部门数据

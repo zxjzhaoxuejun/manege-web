@@ -1,7 +1,7 @@
 import storage from '@/utils/storage.js'
 
 const state = {
-  userInfo: '' || storage.getItem('userInfo'),
+  userInfo: storage.getItem('userInfo') || {},
   token: '',
   roles: []
 }

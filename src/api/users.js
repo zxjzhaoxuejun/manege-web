@@ -50,3 +50,13 @@ export function postUserOperate(data) {
     mock: false
   })
 }
+
+// 用户删除、批量删除
+export function postDelete(data) {
+  return request({
+    url: '/users/delete',
+    method: 'post',
+    data,
+    mock: false
+  })
+}

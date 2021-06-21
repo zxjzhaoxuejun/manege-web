@@ -6,7 +6,7 @@ export function getRoleList(params) {
     url: '/role/list',
     method: 'get',
     params,
-    mock: true
+    mock: false
   })
 }
 
@@ -17,5 +17,41 @@ export function getDeptList(params) {
     method: 'get',
     params,
     mock: true
+  })
+}
+
+/**
+ * 添加角色/编辑
+ */
+export function postRolesOperate(data) {
+  return request({
+    url: '/role/operate',
+    method: 'post',
+    data,
+    mock: false
+  })
+}
+
+/**
+ * 删除角色
+ */
+export function postDelete(data) {
+  return request({
+    url: '/role/delete',
+    method: 'post',
+    data,
+    mock: false
+  })
+}
+
+/**
+ * 更新权限
+ */
+export function postUpdatePermission(data) {
+  return request({
+    url: '/role/update/permission',
+    method: 'post',
+    data,
+    mock: false
   })
 }

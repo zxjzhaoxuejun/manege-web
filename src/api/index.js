@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function leftMenu() {
+export function getMenuList() {
   return request({
-    url:`/users/menu`,
-    method:'get',
+    url: '/menu/list',
+    method: 'get',
+    mock: true
   })
 }

@@ -12,9 +12,9 @@
 
         <el-form-item label="用户状态" prop="state">
           <el-select v-model="formFilter.state" placeholder="全部">
-            <el-option label="在职" value="1" />
-            <el-option label="离职" value="2" />
-            <el-option label="试用期" value="3" />
+            <el-option label="在职" :value="1" />
+            <el-option label="离职" :value="2" />
+            <el-option label="试用期" :value="3" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -57,7 +57,7 @@
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="handleDelete(scope.row.userId)"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -78,10 +78,11 @@
 
 <script>
 import { reactive, ref, onMounted } from 'vue'
-import { getUserList } from '@/api/users'
+import { getUserList, postDelete } from '@/api/users'
 import Pagination from '@/components/Pagination/index.vue'
 import UserAdd from './components/UserAdd.vue'
 import { parseTime } from '@/utils'
+import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
   components: { Pagination, UserAdd },
   setup() {
@@ -144,6 +145,7 @@ export default {
     ])
     const userInfo = ref({})
     const showAdd = ref(false)
+    const checked = ref([])
 
     const total = ref(0)
 
@@ -152,7 +154,10 @@ export default {
     const tableData = ref([])
 
     const handleSelectionChange = (val) => {
-      console.log(val)
+      checked.value = val.map(item => {
+        return item.userId
+      })
+      console.log(checked.value)
     }
 
     // 编辑
@@ -164,12 +169,33 @@ export default {
     }
 
     // 删除
-    const handleDelete = (index, row) => {
+    const handleDelete = (userId) => {
       // TODO
+      const userIds = [userId]
+      postDeleteMethod(userIds)
     }
 
+    const postDeleteMethod = (userIds) => {
+      ElMessageBox.confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        postDelete({ userIds }).then(res => {
+          ElMessage.success({
+            message: res.msg,
+            type: 'success'
+          })
+          getUserListData()
+        })
+      }).catch(() => {
+      //  已取消删除
+      })
+    }
     const handleDelAll = () => {
       // 批量删除
+      const userIds = checked.value
+      postDeleteMethod(userIds)
     }
 
     const handleAdd = () => {
@@ -221,7 +247,9 @@ export default {
       total,
       showAdd,
       userInfo,
-      columns
+      columns,
+      checked,
+      postDeleteMethod
     }
   }
 }

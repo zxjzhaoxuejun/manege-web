@@ -39,6 +39,15 @@ export default [
         component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
       },
       {
+        name: 'RoleControl',
+        path: 'role-control',
+        meta: {
+          title: '角色管理',
+          icon: 'el-icon-s-custom'
+        },
+        component: () => import(/* webpackChunkName: "welcome" */'@/views/authority/role.vue')
+      },
+      {
         name: 'Password',
         path: 'password',
         meta: {

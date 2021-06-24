@@ -14,7 +14,7 @@
     </div>
     <div class="user-list">
       <div class="user-action">
-        <el-button type="primary" size="mini" @click="handleAdd">新增</el-button>
+        <el-button v-has="'role-create'" type="primary" size="mini" @click="handleAdd">新增</el-button>
         <!-- <el-button type="danger" size="mini" @click="handleDelAll">批量删除</el-button> -->
       </div>
       <el-table
@@ -36,15 +36,18 @@
         >
           <template #default="scope">
             <el-button
+              v-has="'role-edit'"
               size="mini"
               @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button>
             <el-button
+              v-has="'role-set-permission'"
               size="mini"
               type="primary"
               @click="handleSet(scope.row)"
             >设置权限</el-button>
             <el-button
+              v-has="'role-delete'"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row.roleId)"
@@ -68,9 +71,9 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, onBeforeMount } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { getRoleList, postDelete } from '@/api/role'
-import { getMenuList } from '@/api/index'
+import { getMenuList } from '@/api/menu'
 import Pagination from '@/components/Pagination/index.vue'
 import RoleOperate from './components/RoleOperate.vue'
 import SetPermission from './components/SetPermission.vue'

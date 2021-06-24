@@ -11,7 +11,7 @@
         :router="true"
       >
         <LeftNav
-          v-for="route in permission_routes"
+          v-for="route in menuList"
           :key="route.path"
           :menu="route"
           :base-path="route.path"
@@ -50,12 +50,14 @@
 import LeftNav from './components/leftNav.vue'
 import BreadCrumb from './components/BreadCrumb.vue'
 import { mapGetters } from 'vuex'
+import { getPermissionMenuList } from '@/api/menu'
 
 export default {
   components: { LeftNav, BreadCrumb },
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
+      menuList: []
     }
   },
   computed: {
@@ -72,7 +74,7 @@ export default {
     }
   },
   created() {
-
+    this.getMenuListData()
   },
   methods: {
     handleCommand(path) {
@@ -94,6 +96,14 @@ export default {
     },
     openLeftCollapse() {
       this.isCollapse = !this.isCollapse
+    },
+    getMenuListData() {
+      getPermissionMenuList().then(res => {
+        const { menuList, activeList } = res.data
+        this.menuList = menuList || []
+        this.$store.dispatch('user/saveUserMenuList', menuList)
+        this.$store.dispatch('user/saveUserActiveList', activeList)
+      })
     }
   }
 }
@@ -118,10 +128,15 @@ export default {
     }
 
     .layout-content{
+        position: relative;
+        height: 100vh;
         margin-left: 260px;
         transition: all .5s;
 
         .nav-top{
+            position: fixed;
+            top: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -130,6 +145,7 @@ export default {
             padding: 0 15px;
             border-bottom: 1px $border-eee solid;
             background:$whiteBg;
+            z-index: 1000;
 
             .nav-item{
               display: flex;
@@ -152,8 +168,8 @@ export default {
 
         .wrapper{
             background: $bodyBg;
-            padding:15px;
-            height:calc(100vh - 82px);
+            padding:70px 15px 15px 15px;
+            height:calc(100vh - 90px);
 
             .main-page{
                 height:calc(100% - 30px);

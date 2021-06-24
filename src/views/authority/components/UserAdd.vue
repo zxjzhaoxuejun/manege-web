@@ -60,7 +60,7 @@
 
 <script>
 import { reactive, computed, onMounted, ref, watch } from 'vue'
-import { getRoleList, getDeptList } from '@/api/role'
+import { getDeptList } from '@/api/role'
 import { postUserOperate } from '@/api/users'
 import { ElMessage } from 'element-plus'
 export default {
@@ -76,6 +76,10 @@ export default {
           action: 'add'
         }
       }
+    },
+    roleListMap: {
+      type: Array,
+      default: () => []
     }
   },
   emits: ['update:show', 'on-change'],
@@ -140,13 +144,7 @@ export default {
     })
 
     const deptList = ref([])
-    const roleListMap = ref([])
-    // 获取所有角色
-    const getRoleListData = () => {
-      getRoleList().then(res => {
-        roleListMap.value = res.data.list
-      })
-    }
+
     // 获取部门数据
     const getDeptListData = () => {
       getDeptList().then(res => {
@@ -177,19 +175,16 @@ export default {
       })
     }
     onMounted(() => {
-      getRoleListData()
       getDeptListData()
     })
     return {
       forms,
-      roleListMap,
       dialogVisible,
       ruleForm,
       deptList,
       formList,
       loading,
       dialogTitle,
-      getRoleListData,
       getDeptListData,
       submitForm
     }

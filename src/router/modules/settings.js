@@ -27,7 +27,7 @@ export default [
           title: '用户管理',
           icon: 'el-icon-user'
         },
-        component: () => import(/* webpackChunkName: "welcome" */'@/views/authority/user.vue')
+        component: () => import(/* webpackChunkName: "user" */'@/views/authority/user.vue')
       },
       {
         name: 'MenuControl',
@@ -36,7 +36,7 @@ export default [
           title: '菜单管理',
           icon: 'el-icon-s-order'
         },
-        component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
+        component: () => import(/* webpackChunkName: "menu" */'@/views/authority/menu.vue')
       },
       {
         name: 'RoleControl',
@@ -45,7 +45,7 @@ export default [
           title: '角色管理',
           icon: 'el-icon-s-custom'
         },
-        component: () => import(/* webpackChunkName: "welcome" */'@/views/authority/role.vue')
+        component: () => import(/* webpackChunkName: "role" */'@/views/authority/role.vue')
       },
       {
         name: 'Password',

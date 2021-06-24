@@ -1,8 +1,8 @@
 <template>
-  <el-submenu v-if="menu.children&&menu.children.length>0" :index="menuPath(menu.path)">
+  <el-submenu v-if="menu.children&&menu.children.length>0&&menu.children[0].menuType==1" :index="menuPath(menu._id)">
     <template #title>
-      <i :class="menu.meta.icon" />
-      <span>{{ generateTitle(menu.meta.title) }}</span>
+      <i :class="menu.icon" />
+      <span>{{ menu.menuName }}</span>
     </template>
     <left-nav
       v-for="child in menu.children"
@@ -12,9 +12,9 @@
       :base-path="menuPath(child.path)"
     />
   </el-submenu>
-  <el-menu-item v-else :index="onlyMenuPath(menu.path)">
-    <i :class="menu.meta.icon" />
-    <span>{{ generateTitle(menu.meta.title) }}</span>
+  <el-menu-item v-else-if="menu.menuType==1" :index="onlyMenuPath(menu.path)">
+    <i :class="menu.icon" />
+    <span>{{ menu.menuName }}</span>
   </el-menu-item>
 </template>
 
@@ -41,6 +41,9 @@ export default {
     return {
 
     }
+  },
+  created() {
+
   },
   methods: {
     menuPath(routePath) {

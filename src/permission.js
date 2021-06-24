@@ -16,9 +16,12 @@ router.beforeEach(async(to, from, next) => {
   const hasRoles = store.state.user.roles && store.state.user.roles.length > 0
   if (!hasRoles) {
     store.commit('user/SET_ROLES', roles)
-    const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+    const accessRoutes = await store.dispatch('permission/generateRoutes', roles) || []
     // dynamically add accessible routes
-    router.addRoute(accessRoutes[0])
+    accessRoutes.map(item => {
+      router.addRoute(item)
+    })
+    // router.addRoute(accessRoutes[0])
     judgeInitInfoUser(to, next, null, true)
   }
   next()

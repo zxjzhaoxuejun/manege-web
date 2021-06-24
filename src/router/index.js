@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import Settings from './modules/settings'
+import Dept from './modules/dept'
 
 export const constantRoutes = [
   {
@@ -29,11 +30,11 @@ export const constantRoutes = [
       icon: 'el-icon-s-home'
     },
     component: Layout,
-    redirect: '/welcome',
+    redirect: '/home',
     children: [
       {
         name: 'Welcome',
-        path: 'welcome',
+        path: 'home',
         meta: {
           title: '欢迎页'
         },
@@ -45,7 +46,8 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-  ...Settings
+  ...Settings,
+  ...Dept
 ]
 
 const router = createRouter({

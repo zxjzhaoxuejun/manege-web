@@ -14,6 +14,7 @@ const judgeInitInfoUser = (to, next, query = {}, replace = false) => {
 router.beforeEach(async(to, from, next) => {
   const roles = ['admin']
   const hasRoles = store.state.user.roles && store.state.user.roles.length > 0
+  document.title = to.meta.title
   if (!hasRoles) {
     store.commit('user/SET_ROLES', roles)
     const accessRoutes = await store.dispatch('permission/generateRoutes', roles) || []

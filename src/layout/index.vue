@@ -26,7 +26,7 @@
         </div>
         <el-dropdown class="suer-info" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{ userInfo.userName }} <i class="el-icon-arrow-down el-icon--right" />
+            {{ userInfo.userName }}22 <i class="el-icon-arrow-down el-icon--right" />
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -74,6 +74,7 @@ export default {
     }
   },
   created() {
+    console.log(this.userInfo.userName)
     this.getMenuListData()
   },
   methods: {
@@ -136,11 +137,11 @@ export default {
         .nav-top{
             position: fixed;
             top: 0;
-            width: 100%;
-            display: flex;
+            display:flex;
             justify-content: space-between;
             align-items: center;
             height: 50px;
+            width:calc(100% - 280px);
             line-height: 50px;
             padding: 0 15px;
             border-bottom: 1px $border-eee solid;
@@ -182,6 +183,10 @@ export default {
     .hide-layout-content{
       margin-left: 64px;
       transition: all .5s;
+
+      .nav-top{
+        width:calc(100% - 89px);
+      }
     }
 
     ::v-deep(.el-menu-vertical-demo){

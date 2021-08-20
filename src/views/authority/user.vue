@@ -241,7 +241,6 @@ export default {
     const getUserListData = () => {
       // 获取用户信息列表
       getUserList(formFilter).then(res => {
-        console.log(res)
         tableData.value = res.data.list
         total.value = res.data.total || 0
       })

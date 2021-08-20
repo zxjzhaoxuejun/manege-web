@@ -1,7 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import Settings from './modules/settings'
-import Dept from './modules/dept'
 
 export const constantRoutes = [
   {
@@ -32,27 +30,31 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/home',
     children: [
-      {
-        name: 'Welcome',
-        path: 'home',
-        meta: {
-          title: '欢迎页'
-        },
-        component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
-      }
+      // {
+      //   name: 'Welcome',
+      //   path: 'home',
+      //   meta: {
+      //     title: '欢迎页'
+      //   },
+      //   component: () => import(/* webpackChunkName: "welcome" */'@/views/base/index.vue')
+      // }
     ]
+  },
+  {
+    name: '404',
+    path: '/404',
+    meta: {
+      title: '404'
+    },
+    children: [],
+    component: () => import(/* webpackChunkName: "404" */'@/views/404/404.vue')
   }
-
-]
-
-export const asyncRoutes = [
-  ...Settings,
-  ...Dept
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: constantRoutes
 })
+
 
 export default router

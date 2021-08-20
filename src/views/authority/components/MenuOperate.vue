@@ -41,6 +41,9 @@
       <el-form-item v-show="forms.menuType==1" label="组件路径" prop="component">
         <el-input v-model="forms.component" placeholder="请输入组件路径" />
       </el-form-item>
+      <el-form-item v-show="forms.menuType==1" label="组件名称" prop="componentName">
+        <el-input v-model="forms.componentName" placeholder="请输入组件名称" />
+      </el-form-item>
       <el-form-item v-show="forms.menuType==2" label="权限标识" prop="menuCode">
         <el-input v-model="forms.menuCode" placeholder="请输入权限标识" />
       </el-form-item>
@@ -93,6 +96,7 @@ export default {
       menuCode: '',
       path: '',
       component: '',
+      componentName:'',
       icon: '',
       action: '',
       _id: ''
@@ -162,6 +166,7 @@ export default {
         menuType = 1,
         menuState = 1,
         component = '',
+        componentName='',
         menuCode = '',
         parentId = [],
         action = 'add' } = props.info
@@ -172,6 +177,7 @@ export default {
       forms.menuState = menuState
       forms.menuCode = menuCode
       forms.component = component
+      forms.componentName = componentName
       forms.path = path
       forms.parentId = parentId.length ? parentId : ['null']
       forms.action = action

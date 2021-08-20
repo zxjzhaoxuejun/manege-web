@@ -1,4 +1,5 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes } from '@/router'
+import { getPermissionMenuList } from '@/api/menu'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -11,6 +12,33 @@ function hasPermission(roles, route) {
   } else {
     return true
   }
+}
+
+function deepGeneratRoute(menuList) {
+  const routes = []
+  const deepList = (list) => {
+    while (list.length) {
+      const item = list.pop()
+      if (item.action || !item.children) {
+        const url=`./../../views/${item.component}.vue`
+        const routerPath=()=>import(url)
+        routes.push({
+          name: item.componentName,
+          path: item.path,
+          meta: {
+            title: item.menuName,
+            icon: item.icon
+          },
+          component:routerPath()
+        })
+      }
+      if(item.children&&!item.action){
+        deepList(item.children)
+      }
+    }
+  }
+  deepList(menuList)
+  return routes
 }
 
 /**
@@ -30,7 +58,7 @@ export function filterAsyncRoutes(routes, roles) {
       res.push(tmp)
     }
   })
-
+// console.log(res)
   return res
 }
 
@@ -43,19 +71,21 @@ const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
-    console.log(state.routes)
+    // console.log(state.routes)
   }
 }
 
 const actions = {
   generateRoutes({ commit }, roles) {
-    console.log(asyncRoutes)
-    return new Promise(resolve => {
-      let accessedRoutes
+    return new Promise(async resolve => {
+      let accessedRoutes=[]
       if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
+        await getPermissionMenuList().then(res => {
+          const { menuList } = res.data
+          accessedRoutes = deepGeneratRoute(menuList) || []
+        })
       } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+        accessedRoutes = filterAsyncRoutes([], roles)
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

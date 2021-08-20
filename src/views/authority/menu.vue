@@ -153,13 +153,13 @@ export default {
       checked.value = val.map(item => {
         return item.userId
       })
-      console.log(checked.value)
     }
 
     // 编辑
     const handleEdit = async(index, row) => {
       // TODO
       userInfo.value = { ...userInfo.value, ...row }
+      console.log(row)
       userInfo.value.action = 'edit'
       showAdd.value = true
     }
@@ -209,7 +209,6 @@ export default {
     }
 
     const getMenuListData = () => {
-      console.log(formFilter)
       // 获取菜单信息列表
       getMenuList(formFilter).then(res => {
         tableData.value = res.data

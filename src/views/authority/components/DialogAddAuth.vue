@@ -65,7 +65,7 @@ export default {
     }
   },
   created() {
-    console.log(this.editObj)
+    // console.log(this.editObj)
     if (this.editObj) {
       const { parentId, menuCode, menuName, type, level } = this.editObj
       this.ruleForm = { ...this.ruleForm, parentId, menuCode, menuName, type, level }
@@ -107,7 +107,7 @@ export default {
     },
     authTreeChange(id) {
       const curAuth = this.authTree.filter(item => item._id === id)[0]
-      console.log(curAuth)
+      // console.log(curAuth)
       this.ruleForm.level = curAuth.level + 1
     },
     cancel() {

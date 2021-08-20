@@ -19,8 +19,11 @@
             <el-button size="small" class="reg-btn" type="text" @click="register">{{ $t('login.regBtn') }}</el-button>
           </div>
         </el-form-item>
+
       </el-form>
     </div>
+    <!-- /* 使用方法 表单 */ -->
+
   </div>
 </template>
 
@@ -29,14 +32,19 @@ import { login } from '@/api/users'
 import langSelect from '@/components/langSelect/index.vue'
 export default {
   name: 'Login',
-  components: { langSelect },
+  components: { langSelect, },
   data() {
     return {
       loading: false,
+      phone: {
+        callingCode: '',
+        phoneNumber: ''
+      },
       form: {
         userName: '',
         userPwd: ''
       },
+
       rules: {
         userName: [
           { required: true, message: this.$t('login.userPlaceholder'), trigger: 'blur' }

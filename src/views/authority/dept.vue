@@ -104,7 +104,7 @@ export default {
       checked.value = val.map(item => {
         return item.userId
       })
-      console.log(checked.value)
+      // console.log(checked.value)
     }
 
     // 编辑
@@ -146,7 +146,6 @@ export default {
     }
     const handleFilter = () => {
       // 查询
-      console.log(424)
       getDeptListData()
     }
 
@@ -157,7 +156,6 @@ export default {
     }
 
     const getDeptListData = () => {
-      console.log(formFilter)
       // 获取部门信息列表
       getDeptList(formFilter).then(res => {
         tableData.value = res.data

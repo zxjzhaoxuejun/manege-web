@@ -49,7 +49,6 @@ service.interceptors.response.use((res) => {
  */
 
 function request(options) {
-  console.log(options)
   let isMock = config.mock
   if (typeof options.mock !== 'undefined') {
     isMock = options.mock

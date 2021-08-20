@@ -66,7 +66,6 @@ export default {
       const route = this.$route
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
-      console.log(path)
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -74,7 +73,6 @@ export default {
     }
   },
   created() {
-    console.log(this.userInfo.userName)
     this.getMenuListData()
   },
   methods: {

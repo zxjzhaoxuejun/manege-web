@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     menuPath(routePath) {
-      const basePaths = this.basePath === '/' ? '' : this.basePath
-      const resPath = basePaths + '/' + routePath
+      const basePaths = this.basePath === '/' ? '' : ""
+      const resPath = basePaths + routePath
       return resPath
     },
     generateTitle,

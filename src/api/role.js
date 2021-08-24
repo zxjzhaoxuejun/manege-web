@@ -16,7 +16,7 @@ export function getDeptList(params) {
     url: '/dept/list',
     method: 'get',
     params,
-    mock: true
+    mock: false
   })
 }
 

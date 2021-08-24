@@ -4,6 +4,6 @@ export function getMenuList() {
   return request({
     url: '/menu/list',
     method: 'get',
-    mock: true
+    mock: false
   })
 }

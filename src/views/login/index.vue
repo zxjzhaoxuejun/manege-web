@@ -23,7 +23,7 @@
       </el-form>
     </div>
     <!-- /* 使用方法 表单 */ -->
-
+  <Demo></Demo>
   </div>
 </template>
 
@@ -64,6 +64,7 @@ export default {
           login(this.form).then(res => {
             this.loading = false
             this.$store.dispatch('user/saveUserInfo', res.data)
+            this.$store.dispatch('user/getLeaveCount')
             this.$router.replace('/')
           }).catch(() => {
             this.loading = false

@@ -13,6 +13,7 @@ const judgeInitInfoUser = (to, next, query = {}, replace = false) => {
 
 // 判断当前地址是否可以访问
 function checkPermission(path) {
+  console.log('=>',path)
   console.log(router.getRoutes())
   const hasPath = router.getRoutes().filter(route => route.path === path).length
   return !!hasPath
@@ -25,6 +26,7 @@ router.beforeEach(async(to, from, next) => {
   if (!hasRoles) {
     store.commit('user/SET_ROLES', roles)
     const accessRoutes = await store.dispatch('permission/generateRoutes', roles) || []
+    await store.dispatch('user/getLeaveCount')
     // dynamically add accessible routes
     accessRoutes.map(item => {
       router.addRoute("Home",item)

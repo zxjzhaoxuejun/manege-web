@@ -5,6 +5,8 @@ import Element from 'element-plus'
 import stroage from './utils/storage'
 import SetupI18n from '@/lang'
 import store from '@/store'
+import 'dhgate-ui/dist/css/index.css'
+import MUI from 'dhgate-ui'
 // import '@/icons' // icon
 import svgIcon from '@/components/SvgIcon/index.vue'
 import './permission'
@@ -31,4 +33,4 @@ app.directive('has', {
   }
 })
 app.config.globalProperties.$stroage = stroage
-app.use(router).use(store).use(Element).use(SetupI18n).mount('#app')
+app.use(router).use(store).use(Element).use(MUI).use(SetupI18n).mount('#app')

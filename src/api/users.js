@@ -28,7 +28,8 @@ export function password(data) {
 export function getCode() {
   return request({
     url: '/users/code-captcha',
-    method: 'get'
+    method: 'get',
+    mock: true
   })
 }
 
@@ -37,7 +38,7 @@ export function getUserList(data) {
     url: '/users/list',
     method: 'post',
     data,
-    mock: false
+    mock: true
   })
 }
 

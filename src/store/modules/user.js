@@ -1,11 +1,13 @@
 import storage from '@/utils/storage.js'
+import {getApproveCount} from '@/api/leave'
 
 const state = {
   userInfo: storage.getItem('userInfo') || {},
   token: '',
   menuList: [],
   actionList: [],
-  roles: []
+  roles: [],
+  count:0,
 }
 
 const mutations = {
@@ -23,6 +25,9 @@ const mutations = {
   SAVE_USER_MENULIST: (state, menuList) => {
     state.menuList = menuList
     storage.setItem('menuList', menuList)
+  },
+  SET_COUNT:(state, count)=>{
+    state.count=count
   }
 }
 
@@ -35,6 +40,11 @@ const actions = {
   },
   saveUserActiveList({ commit }, actionList) {
     commit('SAVE_USER_ACTIVELIST', actionList)
+  },
+  getLeaveCount({commit}){
+    getApproveCount().then(res=>{
+      commit('SET_COUNT',res.data)
+    })
   }
 }
 const namespaced = true

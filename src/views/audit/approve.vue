@@ -21,8 +21,7 @@
     </div>
     <div class="user-list">
       <div class="user-action">
-        <el-button type="primary" size="mini" @click="handleAdd">申请休假</el-button>
-        <!-- <el-button v-has="'user-batch-delete'" type="danger" size="mini" @click="handleDelAll">批量删除</el-button> -->
+        <!-- <el-button type="primary" size="mini">申请休假</el-button> -->
       </div>
       <el-table
         :data="tableData"
@@ -44,9 +43,9 @@
             <el-button
               size="mini"
               type="danger"
-              v-if="[1,2].includes(scope.row.applyState)"
-              @click="handleDelete(scope.row._id)"
-            >作废</el-button>
+              v-if="scope.row.curAuditUserName==userInfo.userName&&[1,2].includes(scope.row.applyState)"
+              @click="handleCheck(scope.$index, scope.row)"
+            >审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,110 +59,80 @@
         />
       </div>
     </div>
-    <!-- 申请弹窗 -->
-    <el-dialog
-    title="休假申请"
-    v-model="dialogForm"
-    @close="resetForm"
-    width="40%">
-   <el-form :model="applyForm" :rules="applyRules" ref="applyForms" label-width="100px" class="demo-ruleForm">
-  <el-form-item label="休假类型" prop="applyType">
-    <el-select v-model="applyForm.applyType" placeholder="请选择休假类型">
-      <el-option label="事假" :value="1"></el-option>
-      <el-option label="调休" :value="2"></el-option>
-      <el-option label="年假" :value="3"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item label="休假时间" prop="leaveDate">
-    <el-date-picker
-      v-model="applyForm.leaveDate"
-      @change="changeDate"
-      type="datetimerange"
-      :default-time="defaultTime"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期">
-    </el-date-picker>
-  </el-form-item>
-  <el-form-item label="休假时长" prop="leaveTime">
-    <el-input v-model="applyForm.leaveTime" disabled></el-input>
-  </el-form-item>
-  <el-form-item label="休假原因" prop="reasons">
-    <el-input type="textarea" v-model="applyForm.reasons" placeholder="请输入休假原因..." :rows="4"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="submitForm" :loading="loading">提交</el-button>
-    <el-button @click="resetForm">取消</el-button>
-  </el-form-item>
-</el-form>
-</el-dialog>
-
+    
  <el-dialog
-    title="申请休假详情"
+    title="审核"
     v-model="dialogDetails"
     width="40%">
-    <div class="steps-list">
-        <el-steps :active="viewData.applyState" align-center>
-            <el-step title="待审批"></el-step>
-            <el-step title="审批中"></el-step>
-            <el-step :title="stepStateFilter(viewData.applyState)"></el-step>
-        </el-steps>
-    </div>
-    <div class="des-list">
-        <div class="des-list-item">
-            <span class="item-name">休假类型：</span>
-            <span class="item-val">{{applyTypeFilter(viewData.applyType)}}</span>
-        </div>
-        <div class="des-list-item">
-            <span class="item-name">休假时间：</span>
-            <span class="item-val">{{dateFilter(viewData.startTime)}} - {{dateFilter(viewData.endTime)}}</span>
-        </div>
-        <div class="des-list-item">
-            <span class="item-name">休假时长：</span>
-            <span class="item-val">{{viewData.leaveTime}}</span>
-        </div>
-        <div class="des-list-item">
-            <span class="item-name">休假原因：</span>
-            <span class="item-val">{{viewData.reasons}}</span>
-        </div>
-        <div class="des-list-item">
-            <span class="item-name">审批状态：</span>
-            <span class="item-val">{{applyStateFilter(viewData.applyState)}}</span>
-        </div>
-        <div class="des-list-item">
-            <span class="item-name">审批人：</span>
-            <span class="item-val">{{viewData.curAuditUserName}}</span>
-        </div>
-    </div>
-
- </el-dialog>
+    <el-form ref="applyForms" :model="applyForm" :rules="applyRules">
+      <el-form-item label="申请人:">
+          <div class="des-list-item">
+            {{viewData.applyUser.userName}}
+          </div>
+      </el-form-item>
+      <el-form-item label="休假类型：">
+          <div class="des-list-item">
+            {{applyTypeFilter(viewData.applyType)}}
+          </div>
+      </el-form-item>
+      <el-form-item label="休假时间：">
+          <div class="des-list-item">
+            {{dateFilter(viewData.startTime)}} - {{dateFilter(viewData.endTime)}}
+          </div>
+      </el-form-item>
+      <el-form-item label="休假时长：">
+          <div class="des-list-item">
+            {{viewData.leaveTime}}
+          </div>
+      </el-form-item>
+      <el-form-item label="休假原因：">
+          <div class="des-list-item">
+            {{viewData.reasons}}
+          </div>
+      </el-form-item>
+      <el-form-item label="审批状态：">
+          <div class="des-list-item">
+            {{applyStateFilter(viewData.applyState)}}
+          </div>
+      </el-form-item>
+      <el-form-item label="审批人：">
+          <div class="des-list-item">
+            {{viewData.curAuditUserName}}
+          </div>
+      </el-form-item>
+      <el-form-item label="备注：" prop="remark">
+          <el-input type="textarea" :rows="3" v-model="applyForm.remark" placeholder="请输入备注..."></el-input>
+      </el-form-item>
+      <el-form-item style="text-align:center;">
+        <el-button type="primary" @click="handleApprove('pass')">审核通过</el-button>
+        <el-button @click="handleApprove('refuse')">驳回</el-button>
+      </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { reactive, ref, onMounted } from 'vue'
-import { getLeaveList,leaveOperate } from '@/api/leave'
+import { reactive, ref, onMounted, computed } from 'vue'
+import {useStore} from 'vuex'
+import { getLeaveList,approveOperate } from '@/api/leave'
 import Pagination from '@/components/Pagination/index.vue'
 import { parseTime } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
-
 export default {
+  name:'Approve',
   components: { Pagination },
   setup() {
+    const store=useStore()
     const formFilter = reactive({
-      applyState: null,
+      applyState: 1,
+      type:'approve',
       pageNum: 1,
       pageSize: 20
     })
     const viewData=ref({})
     const applyForm=reactive({
-        leaveTime:'',
-        reasons:'',
-        applyType:null,
-        startTime:'',
-        endTime:'',
-        leaveDate:'',
-        action:''
+        remark:'',
     })
 
     const defaultTime = ref([
@@ -176,6 +145,13 @@ export default {
       {
         label: '单号',
         prop: 'orderNo'
+      },
+      {
+        label: '申请人',
+        prop: '',
+        formatter(row){
+          return row.applyUser.userName
+        }
       },
       {
         label: '休假时间',
@@ -234,7 +210,7 @@ export default {
         }
       },
     ])
-    const dialogForm=ref(false)
+    
     const loading=ref(false)
     const dialogDetails=ref(false)
 
@@ -246,17 +222,8 @@ export default {
     const applyForms=ref(null)
 
     const applyRules=reactive({
-        applyType:[
-            { required: true, message: '请选择休假类型', trigger: 'blur' }
-        ],
-        leaveTime:[
-            {required: true, message: '请选择休假时长', trigger: 'blur'}
-        ],
-        leaveDate:[
-           {required: true, message: '请选择休假时间', trigger: 'blur'} 
-        ],
-        reasons:[
-           {required: true, message: '请填写休假原因', trigger: 'blur'} 
+        remark:[
+           {required: true, message: '请填写备注', trigger: 'blur'} 
         ]
     })
 
@@ -303,20 +270,10 @@ export default {
 
 
 
-    // 删除
-    const handleDelete = (id) => {
-      // TODO
-      postDeleteMethod(id)
-    }
-
-    //时间选择变化
-    const changeDate=(val)=>{
-        const day=(val[1]-val[0])/(24*60*60*1000)+1
-        if((day-day.toString().split('.')[0])<0.375){
-            applyForm.leaveTime=`${parseInt(day)-0.5}天`
-        }else{
-            applyForm.leaveTime=`${parseInt(day)}天`
-        }
+    // 审核
+    const handleCheck = (index, row) => {
+      viewData.value=row
+      dialogDetails.value=true
     }
 
     const postDeleteMethod = (id) => {
@@ -336,16 +293,9 @@ export default {
       //  已取消删除
       })
     }
-    const handleDelAll = () => {
-      // 批量删除
-      postDeleteMethod(userIds)
-    }
+    
 
-    const handleAdd = () => {
-      // 申请休假
-      dialogForm.value = true
-      applyForm.action='create'
-    }
+   
     const handleFilter = () => {
       // 搜索查询
       getApplyListData()
@@ -359,7 +309,7 @@ export default {
     const resetForm = () => {
       // 重置申请表单
       applyForms.value.resetFields()
-      dialogForm.value = false
+      dialogDetails.value = false
     }
 
     const getApplyListData = () => {
@@ -370,20 +320,18 @@ export default {
       })
     }
 
-    const submitForm=()=>{
+    const handleApprove=(action)=>{
       applyForms.value.validate((valid) => {
         if (valid) {
           loading.value = true
-          applyForm.startTime=applyForm.leaveDate[0]
-          applyForm.endTime=applyForm.leaveDate[1]
-          let params={...applyForm}
-          delete params.leaveDate
-          leaveOperate(params).then(res=>{
+          let params={...applyForm,action,_id:viewData.value._id}
+          approveOperate(params).then(res=>{
             ElMessage.success({
               message: res.msg,
               type: 'success'
             })
             resetForm()
+            store.dispatch('user/getLeaveCount')
             getApplyListData()
           }).finally(()=>{
               loading.value = false
@@ -404,10 +352,9 @@ export default {
     })
     return {
       formFilter,
+      userInfo:computed(()=>store.getters.userInfo),
       tableData,
-      dialogForm,
       applyRules,
-      changeDate,
       defaultTime,
       applyTypeFilter,
       applyStateFilter,
@@ -415,14 +362,12 @@ export default {
       dateFilter,
       loading,
       handleView,
-      handleDelete,
+      handleCheck,
       dialogDetails,
       handleFilter,
-      handleDelAll,
       viewData,
-      handleAdd,
       resetForm,
-      submitForm,
+      handleApprove,
       reset,
       getApplyListData,
       handleCurrentChange,

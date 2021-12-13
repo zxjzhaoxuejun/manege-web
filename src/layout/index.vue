@@ -24,9 +24,15 @@
           <i class="el-icon-s-fold isCollapse" @click="openLeftCollapse" />
           <BreadCrumb />
         </div>
+        <div class="nav-right">
+          <div class="info-mode" @click="goApprovePage" v-has="'approve-check'">
+            <el-badge :is-dot="count">
+              <i class="el-icon-message-solid" style="display:block;"/>
+            </el-badge>
+          </div> 
         <el-dropdown class="suer-info" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{ userInfo.userName }}22 <i class="el-icon-arrow-down el-icon--right" />
+            {{ userInfo.userName }} <i class="el-icon-arrow-down el-icon--right" />
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -36,6 +42,7 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
+        </div>
       </div>
       <div class="wrapper">
         <!-- <div class="main-page"> -->
@@ -61,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo', 'permission_routes']),
+    ...mapGetters(['userInfo','count', 'permission_routes']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -92,6 +99,9 @@ export default {
     loginOut() {
       this.$stroage.clearItem('userInfo')
       this.$router.push('/login')
+    },
+    goApprovePage(){
+      this.$router.push('/approve')
     },
     openLeftCollapse() {
       this.isCollapse = !this.isCollapse
@@ -157,12 +167,23 @@ export default {
             }
 
             .suer-info{
-
+              
               .el-dropdown-link{
                 cursor: pointer;
                 color: $blueText;
+                // line-height: 50px;
               }
             }
+        }
+
+        .nav-right{
+          display: flex;
+          align-items: center;
+
+          .info-mode{
+            padding: 0 15px;
+            cursor: pointer;
+          }
         }
 
         .wrapper{

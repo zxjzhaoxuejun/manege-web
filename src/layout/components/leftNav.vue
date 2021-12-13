@@ -14,13 +14,17 @@
   </el-submenu>
   <el-menu-item v-else-if="menu.menuType==1" :index="onlyMenuPath(menu.path)">
     <i :class="menu.icon" />
-    <span>{{ menu.menuName }}</span>
+    <el-badge :value="count" type="danger" class="item" :max="99" v-if="menu.path==='/approve'&&!!count">
+      <span>{{ menu.menuName }}</span>
+    </el-badge>
+    <span v-else>{{ menu.menuName }}</span>
   </el-menu-item>
 </template>
 
 <script>
 // "menuType":"1", //1菜单，2按钮
 import { generateTitle } from '@/utils/routeI18n'
+import {mapGetters} from 'vuex'
 export default {
   name: 'TreeMenu',
   props: {
@@ -36,6 +40,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed:{
+    ...mapGetters(['count']),
   },
   data() {
     return {
@@ -54,11 +61,17 @@ export default {
     generateTitle,
     onlyMenuPath(routePath) {
       return this.isNest ? this.basePath : routePath
-    }
+    },
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+:deep(.el-badge__content){
+  border: none;
+  font-size: 12px;
+}
+:deep(.el-badge__content.is-fixed){
+  top:10px
+}
 </style>
